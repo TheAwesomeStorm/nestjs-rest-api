@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -10,8 +10,14 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: 'Create user' })
-  async createUser(@Body() userData: UserDto): Promise<UserDto> {
+  async createUserAsync(@Body() userData: UserDto): Promise<UserDto> {
     await this.userRepository.save(userData);
     return userData;
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Read all users' })
+  async readUsersAsync() {
+    return await this.userRepository.readAll();
   }
 }

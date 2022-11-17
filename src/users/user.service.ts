@@ -8,4 +8,8 @@ export class UserService {
   async save(user: UserDto) {
     this.users.push(user);
   }
+
+  async readAll() {
+    return this.users;
+  }
 }
