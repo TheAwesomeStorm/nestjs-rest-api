@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { useContainer } from 'class-validator';
 
 const port = process.env.PORT || 3000;
 
@@ -15,6 +16,8 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('REST API')

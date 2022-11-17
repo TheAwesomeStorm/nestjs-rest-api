@@ -12,4 +12,8 @@ export class UserService {
   async readAll() {
     return this.users;
   }
+
+  async findUserByEmail(email: string) {
+    return this.users.find((user) => user.email === email);
+  }
 }
