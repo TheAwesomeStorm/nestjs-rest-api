@@ -12,6 +12,7 @@ async function bootstrap() {
     .setDescription('Built with Nest.js framework')
     .setVersion('1.0')
     .addTag('users')
+    .addTag('products')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('swagger', app, document);
