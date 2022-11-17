@@ -16,4 +16,20 @@ export class UserService {
   async findUserByEmail(email: string) {
     return this.users.find((user) => user.email === email);
   }
+
+  async updateUser(id: string, userData: Partial<UserEntity>) {
+    const user = this.users.find((user) => user.id === id);
+
+    if (!user)
+      throw new Error(`There is not an user with with ID ${id} to update`);
+
+    Object.entries(userData).forEach(([key, value]) => {
+      if (key === 'id') return;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      user[key] = value;
+    });
+
+    return user;
+  }
 }
