@@ -1,15 +1,17 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { IsEmailUnique } from '../validators/unique-email.validator';
+import { AutoMap } from '@automapper/classes';
 
 export class UserCreateDto {
+  @AutoMap()
   @IsNotEmpty()
   @IsString()
   name: string;
 
-  @IsEmailUnique()
+  @AutoMap()
   @IsEmail()
   email: string;
 
+  @AutoMap()
   @MinLength(8)
   password: string;
 }

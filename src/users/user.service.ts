@@ -1,16 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from './entities/user.entity';
+import { InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/core';
+import { UserCreateDto } from './dto/user-create.dto';
+import { UserReadDto } from './dto/user-read.dto';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class UserService {
   private users: UserEntity[] = [];
 
-  async save(user: UserEntity) {
+  constructor(@InjectMapper() private readonly mapper: Mapper) {}
+
+  async save(userData: UserCreateDto) {
+    const user = this.mapper.map(userData, UserCreateDto, UserEntity);
+    user.id = uuid();
     this.users.push(user);
+    return this.mapper.map(user, UserEntity, UserReadDto);
   }
 
   async readAll() {
-    return this.users;
+    return this.mapper.mapArray(this.users, UserEntity, UserReadDto);
   }
 
   async findUserByEmail(email: string) {
