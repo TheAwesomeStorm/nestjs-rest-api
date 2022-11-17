@@ -4,6 +4,7 @@ import { UserCreateDto } from './dto/user-create.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
 import { v4 as uuid } from 'uuid';
+import { UserReadDto } from './dto/user-read.dto';
 
 @ApiTags('users')
 @Controller('/users')
@@ -26,6 +27,7 @@ export class UserController {
   @Get()
   @ApiOperation({ summary: 'Read all users' })
   async readUsersAsync() {
-    return await this.userRepository.readAll();
+    const users = await this.userRepository.readAll();
+    return users.map((user) => new UserReadDto(user.id, user.name));
   }
 }
