@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserCreateDto } from './dto/user-create.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -38,5 +46,11 @@ export class UserController {
     @Body() userData: UserUpdateDto,
   ) {
     return await this.userService.updateUser(id, userData);
+  }
+
+  @Delete('/:id')
+  async deleteUserAsync(@Param('id') id: string) {
+    await this.userService.deleteUser(id);
+    return { message: `User with ID ${id} was successful deleted` };
   }
 }

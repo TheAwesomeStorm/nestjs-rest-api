@@ -32,4 +32,9 @@ export class UserService {
 
     return user;
   }
+
+  async deleteUser(id: string) {
+    const index = this.users.findIndex((user) => user.id === id);
+    this.users.splice(index, 1);
+  }
 }
