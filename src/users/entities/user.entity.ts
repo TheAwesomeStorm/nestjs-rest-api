@@ -1,21 +1,21 @@
 import { AutoMap } from '@automapper/classes';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
-@Entity()
+@Entity({ tableName: 'users' })
 export class UserEntity {
   @AutoMap()
-  @PrimaryGeneratedColumn()
+  @PrimaryKey()
   id: number;
 
   @AutoMap()
-  @Column()
+  @Property()
   name: string;
 
   @AutoMap()
-  @Column()
+  @Property()
   email: string;
 
   @AutoMap()
-  @Column()
+  @Property()
   password: string;
 }

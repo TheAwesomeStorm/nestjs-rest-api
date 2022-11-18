@@ -5,20 +5,20 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entities/user.entity';
-import { Repository } from 'typeorm';
+import { EntityRepository } from '@mikro-orm/mysql';
+import { InjectRepository } from '@mikro-orm/nestjs';
 
 @Injectable()
 @ValidatorConstraint({ async: true })
 export class UniqueEmailValidator implements ValidatorConstraintInterface {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
+    private userRepository: EntityRepository<UserEntity>,
   ) {}
 
   async validate(value: any): Promise<boolean> {
-    const user = await this.userRepository.findOneBy({ email: value });
+    const user = await this.userRepository.findOne({ email: value });
     return !user;
   }
 
