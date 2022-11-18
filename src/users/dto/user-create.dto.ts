@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { AutoMap } from '@automapper/classes';
+import { IsEmailUnique } from '../validators/unique-email.validator';
 
 export class UserCreateDto {
   @AutoMap()
@@ -9,6 +10,7 @@ export class UserCreateDto {
 
   @AutoMap()
   @IsEmail()
+  @IsEmailUnique()
   email: string;
 
   @AutoMap()

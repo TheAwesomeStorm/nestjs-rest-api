@@ -21,7 +21,12 @@ export class UserProfile extends AutomapperProfile {
         UserEntity,
         forMember((dest) => dest.id, ignore()),
       );
-      createMap(mapper, UserUpdateDto, UserEntity);
+      createMap(
+        mapper,
+        UserUpdateDto,
+        UserEntity,
+        forMember((dest) => dest.id, ignore()),
+      );
     };
   }
 }

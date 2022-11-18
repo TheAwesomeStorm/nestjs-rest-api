@@ -29,16 +29,22 @@ export class UserController {
     return await this.userService.readAll();
   }
 
+  @Get('/:id')
+  async readUserByIdAsync(@Param('id') id: number) {
+    return await this.userService.readById(id);
+  }
+
   @Put('/:id')
   async updateUserAsync(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() userData: UserUpdateDto,
   ) {
-    return await this.userService.updateUser(id, userData);
+    await this.userService.updateUser(id, userData);
+    return { message: `User with ID ${id} was succesful updated` };
   }
 
   @Delete('/:id')
-  async deleteUserAsync(@Param('id') id: string) {
+  async deleteUserAsync(@Param('id') id: number) {
     await this.userService.deleteUser(id);
     return { message: `User with ID ${id} was successful deleted` };
   }
