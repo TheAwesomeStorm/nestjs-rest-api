@@ -18,7 +18,8 @@ export class UserService {
 
   async save(userData: UserCreateDto) {
     const user = this.mapper.map(userData, UserCreateDto, UserEntity);
-    return await this.userRepository.nativeInsert(user);
+    const createdUserId = await this.userRepository.nativeInsert(user);
+    return this.readById(createdUserId);
   }
 
   async readAll() {
@@ -32,11 +33,11 @@ export class UserService {
   }
 
   async updateUser(id: number, userData: UserUpdateDto) {
-    const user = this.mapper.map(userData, UserUpdateDto, UserEntity);
-    await this.userRepository.nativeUpdate({ id }, user);
+    await this.userRepository.nativeUpdate({ id }, userData);
+    return await this.readById(id);
   }
 
   async deleteUser(id: number) {
-    await this.userRepository.remove({ id });
+    return await this.userRepository.nativeDelete({ id });
   }
 }

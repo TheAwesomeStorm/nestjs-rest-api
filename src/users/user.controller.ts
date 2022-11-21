@@ -39,13 +39,12 @@ export class UserController {
     @Param('id') id: number,
     @Body() userData: UserUpdateDto,
   ) {
-    await this.userService.updateUser(id, userData);
-    return { message: `User with ID ${id} was succesful updated` };
+    return await this.userService.updateUser(id, userData);
   }
 
   @Delete('/:id')
   async deleteUserAsync(@Param('id') id: number) {
-    await this.userService.deleteUser(id);
-    return { message: `User with ID ${id} was successful deleted` };
+    const deletedUserId = await this.userService.deleteUser(id);
+    return { message: `User with ID ${deletedUserId} was successful deleted` };
   }
 }
